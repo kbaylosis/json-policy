@@ -1,0 +1,31 @@
+{
+  "name": "json-policy",
+  "version": "0.0.1",
+  "description": "Evaluate json-based policies",
+  "main": "build/json-policy.min.js",
+  "dependencies": {
+    "lodash": "^4.0.1",
+    "property-path": "0.0.5"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.12.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "^2.4.4"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/kbaylosis/json-policy.git"
+  },
+  "author": "Kenneth Baylosis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kbaylosis/json-policy/issues"
+  },
+  "homepage": "https://github.com/kbaylosis/json-policy#readme"
+}
