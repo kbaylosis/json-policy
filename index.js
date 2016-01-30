@@ -19,43 +19,6 @@ function JSONPolicy(ops, vp) {
 	}
 }
 
-function evaluate(policy, data, operator) {
-	//
-	// Act on base data types
-	//
-	if (_.isBoolean(policy) || 
-		 _.isDate(policy) || 
-		 _.isNumber(policy) || 
-		 _.isString(policy) || 
-		 _.isNil(policy)) {
-
-		//
-		// Substitute the property variable with the value from the data
-		//
-		if (_.isString(policy) && policy.trim().startsWith(varPrefix)) {
-			policy = policy.replace(varPrefix, "");
-			policy = propPath.get(data, policy);
-		}
-
-		return performOp(operator, policy);
-	}
-
-	//
-	// Evaluate each property in the object or array
-	//
-	var k = Object.keys(policy);
-	var results = [];
-	var policyIsArray = _.isArray(policy);
-	for (var i = 0; i < k.length; i++) {
-		results.push(evaluate(policy[k[i]], data, policyIsArray ? null : k[i]));
-	};
-
-	//
-	// Act on result sets
-	//
-	return performOp(operator, results);
-}
-
 function performOp(operator, operands) {
 	if (!_.has(operations, operator)) {
 		if (_.isArray(operands) && 
@@ -71,6 +34,50 @@ function performOp(operator, operands) {
 	}
 	
 	return operations[operator].apply(this, operands); 
+}
+
+//
+// Substitute the property variable with the value from the data
+//
+function subVar(exp, data) {
+	if (_.isString(exp) && exp.trim().startsWith(varPrefix)) {
+		return propPath
+			.get(data, 
+				  exp.replace(varPrefix, ""));
+	}
+
+	return exp;
+}
+
+function evaluate(policy, data, operator) {
+	
+	//
+	// Act on base data types
+	//
+	if (_.isBoolean(policy) || 
+		 _.isDate(policy) || 
+		 _.isNumber(policy) || 
+		 _.isString(policy) || 
+		 _.isNil(policy)) {
+
+		policy = subVar(policy, data); 			
+		return performOp(operator, policy);
+	}
+
+	//
+	// Evaluate each property in the object or array
+	//
+	var k = Object.keys(policy);
+	var results = [];
+	var policyIsArray = _.isArray(policy);
+	for (var i = 0; i < k.length; i++) {
+		results.push(evaluate(policy[k[i]], data, policyIsArray ? null : k[i]));
+	};
+
+	//
+	// Act on the result set
+	//
+	return performOp(operator, results);
 }
 
 JSONPolicy.prototype = _.create(Object.prototype, {

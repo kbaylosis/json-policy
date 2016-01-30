@@ -95,6 +95,28 @@ var operations = {
 	},
 
 	//
+	// Arithmetic
+	//
+	"plus" : function(x, y) {
+		return x + y;
+	},
+	"minus" : function(x, y) {
+		return x - y;
+	},
+	"times" : function(x, y) {
+		return x * y;
+	},
+	"divideby" : function(x, y) {
+		return x / y;
+	},
+	"modulo" : function(x, y) {
+		return x % y;
+	},
+	"power" : function(x, y) {
+		return Math.pow(x, y);
+	},
+
+	//
 	// Conditional
 	//
 	"ifelse" : function(cond, arg1, arg2) {
@@ -110,8 +132,11 @@ var operations = {
 	//
 	"print" : function(str) {
 		console.log(str);
-		return true;
-	}
+		return str;
+	},
+	"echo" : function(str) {
+		return str;
+	} 
 };
 
 module.exports = operations;
