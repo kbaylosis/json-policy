@@ -52,6 +52,32 @@ describe("json-policies", function() {
 		}).should.equal(true);	
 	});
 
+	it("simple arithmetic", function() {
+		jsonPolicy.evaluate({ 
+			"plus" : [1, 2]
+		}).should.equal(3);	
+
+		jsonPolicy.evaluate({ 
+			"minus" : [2, 1]
+		}).should.equal(1);	
+
+		jsonPolicy.evaluate({ 
+			"times" : [2, 3]
+		}).should.equal(6);	
+
+		jsonPolicy.evaluate({ 
+			"divideby" : [6, 2]
+		}).should.equal(3);	
+
+		jsonPolicy.evaluate({ 
+			"modulo" : [6, 2]
+		}).should.equal(0);	
+
+		jsonPolicy.evaluate({ 
+			"power" : [2, 3]
+		}).should.equal(8);	
+	});
+
 	it("literals", function() {
 		jsonPolicy.evaluate(true).should.equal(true);	
 		jsonPolicy.evaluate(false).should.equal(false);	
