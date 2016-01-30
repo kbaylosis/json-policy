@@ -1,4 +1,5 @@
 var should = require("chai").should();
+var expect = require("chai").expect;
 var JSONPolicy = require("../index");
 
 describe("json-policies", function() {
@@ -63,7 +64,7 @@ describe("json-policies", function() {
 	});
 
 	it("misc functions", function() {
-		jsonPolicy.evaluate({"print" : "Hello, world!"}).should.equal(true);
+		jsonPolicy.evaluate({"print" : "Hello, world!"}).should.equal("Hello, world!");
 	});
 
 	it("property access", function() {
@@ -118,6 +119,34 @@ describe("json-policies", function() {
 
 	});
 
+	 it("fizzbuzz", function() {
+		var expected = require("fs").readFileSync("./test/fizzbuzz.txt", {encoding : "utf-8"});
+		var result = "";
+		for (var i = 1; i <= 30; i++) {
+			result = result + jsonPolicy.evaluate({ 
+				or : [
+					{ ifelse : [
+						{ eq : [ { modulo : [ "$i", 15 ] }, 0]},
+						"FizzBuzz",
+						false
+					]},
+					{ ifelse : [
+						{ eq : [ { modulo : [ "$i", 3 ] }, 0]},
+						"Fizz",
+						false
+					]},
+					{ ifelse : [
+						{ eq : [ { modulo : [ "$i", 5 ] }, 0]},
+						"Buzz",
+						false
+					]},
+					{ echo : "$i" }
+			]}, { i : i });	
 
+			result += ",";
+		}
+
+		expect(expected.trim()).to.equal(result.trim());
+	});
 
 });
