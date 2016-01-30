@@ -47,3 +47,6 @@ Session.vim
 
 # mocha test output
 results.txt
+
+#Grunt
+build
