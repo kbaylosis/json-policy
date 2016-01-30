@@ -40,10 +40,26 @@ function performOp(operator, operands) {
 // Substitute the property variable with the value from the data
 //
 function subVar(exp, data) {
-	if (_.isString(exp) && exp.trim().startsWith(varPrefix)) {
-		return propPath
-			.get(data, 
-				  exp.replace(varPrefix, ""));
+	if (_.isString(exp)) {
+		var exp = exp.trim();
+		if (exp.startsWith(varPrefix)) {
+			exp = exp.replace(varPrefix, "")
+			var matches = exp.match(/\[(.*?)\]/g);
+			if (matches && matches.length > 0) {
+				var index = matches[matches.length -1].replace("[", "").replace("]", "");
+				exp = exp.replace("[" + index + "]", "");
+				var value = null;
+				if (exp.length > 0) {
+					value = propPath.get(data, exp);
+					return value[index];
+				}
+
+				return data[index];
+			}
+
+			return propPath
+				.get(data, exp);
+		}
 	}
 
 	return exp;

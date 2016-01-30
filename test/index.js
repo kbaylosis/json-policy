@@ -145,7 +145,21 @@ describe("json-policies", function() {
 
 	});
 
-	 it("fizzbuzz", function() {
+	it("array item access", function() {
+		jsonPolicy.evaluate({
+			echo : "$[1]" 
+		}, ["apple", "banana", "orange"]).should.equal("banana");	
+
+		jsonPolicy.evaluate({
+			echo : "$b[2]" 
+		}, { a : ["apple", "banana", "orange"], b : ["one", "two", "three"]}).should.equal("three");	
+		
+		jsonPolicy.evaluate({
+			echo : "$b.c[2]" 
+		}, { a : ["apple", "banana", "orange"], b : { c : ["one", "two", "three"]}}).should.equal("three");	
+	});
+
+	it("fizzbuzz", function() {
 		var expected = require("fs").readFileSync("./test/fizzbuzz.txt", {encoding : "utf-8"});
 		var result = "";
 		for (var i = 1; i <= 30; i++) {
