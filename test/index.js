@@ -143,6 +143,20 @@ describe("json-policies", function() {
 			}
 		}).should.equal(true);	
 
+		jsonPolicy.evaluate({ and : [
+			{ eq : ["$resource.sensitivity" , "confidential"]},
+			{ any : [
+				"$user.clearance",
+				"confidential", "secret", "topsecret"
+			]}				
+		]}, {
+			resource : {
+				sensitivity : "confidential"
+			},
+			user : {
+				clearance : "secret"
+			}
+		}).should.equal(true);	
 	});
 
 	it("array item access", function() {
