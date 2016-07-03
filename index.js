@@ -163,7 +163,11 @@ function performOp(operator, operands) {
 	if (!_.has(operations, operator)) {
 		if (_.isArray(operands) && 
 			 operands.length === 1) {
-			return operands[0];
+			operands = operands[0];
+		}
+
+		if (_.isUndefined(operands)) {
+			operands = null;
 		}
 
 		return operands;
