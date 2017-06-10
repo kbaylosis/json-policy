@@ -35,51 +35,32 @@ npm i --save json-policy
 
 ## Default operators
 
-**not(value)** Logical not. *NOT value*
+| Operator  |  Description |     |
+|-----------|:------------:|:---:|
+| **not(value)** | Logical not. | *NOT value* |
+| **and(arg1, arg2)** | Logical and. | *arg1 AND arg2* | 
+| **or(arg1, arg2)** | Logical not. | *arg1 OR arg2* | 
+| **xor(arg1, arg2)** | Logical exclusive or. | *arg1 XOR arg2* | 
+| **or(arg1, arg2)** | Logical not. | *arg1 OR arg2* | 
+| **mand(arg1, arg2, ... argN)** | Multiple logical and. | *arg1 AND arg2 AND ... AND argN* | 
+| **mor(arg1, arg2, ... argN)** | Multiple logical or. | *arg1 OR arg2 OR ... OR argN* | 
+| **neq(arg1, arg2)** | Not equal. | *arg1 <> arg2* | 
+| **lt(arg1, arg2)** | Less than. | *arg1 < arg2* | 
+| **lte(arg1, arg2)** | Less than or equal to. | *arg1 <= arg2* | 
+| **eq(arg1, arg2)** | Equal to. | *arg1 == arg2*| 
+| **gte(arg1, arg2)** | Greater than or equal to. | *arg1 >= arg2* | 
+| **gt(arg1, arg2)** | Greater than. | *arg1 > arg2* | 
+| **any(item, ...args)** | Returns true if *item* matches with any of the values of the rest of the arguments. |
+| **plus(arg1, arg2)** | Mathematical addition or concatenate operator depending on the argument datatypes. *arg1 + arg2* | 
+| **minus(arg1, arg2)** | Mathematical subtraction. | *arg1 - arg2* | 
+| **times(arg1, arg2)** | Mathematical multiplication. | *arg1 x arg2* | 
+| **divideby(arg1, arg2)** | Mathematical division. | *arg1 / arg2* | 
+| **modulo(arg1, arg2)** | Mathematical modulo. | *arg1 % arg2* | 
+| **power(arg1, arg2)** | Mathematical power function. | *arg1 ^ arg2* | 
+| **ifelse(condition, true_arg, false_arg)** | If else conditional operator. | *if (**condition**) then*true_arg** else*false_arg** | 
+| **print(string)** | Prints a string to the console and also returns the printed string. | *print("Hello, world!")* | 
+| **echo(string)** | Simply returns the inputted. | *string.echo("Hello, world!") // Returns "Hello, world!"* | 
 
-**and(arg1, arg2)** Logical and. *arg1 AND arg2*
-
-**or(arg1, arg2)** Logical not. *arg1 OR arg2*
-
-**xor(arg1, arg2)** Logical exclusive or. *arg1 XOR arg2*
-
-**or(arg1, arg2)** Logical not. *arg1 OR arg2*
-
-**mand(arg1, arg2, ... argN)** Multiple logical and. *arg1 AND arg2 AND ... AND argN*
-
-**mor(arg1, arg2, ... argN)** Multiple logical or. *arg1 OR arg2 OR ... OR argN*
-
-**neq(arg1, arg2)** Not equal. *arg1 <> arg2*
-
-**lt(arg1, arg2)** Less than. *arg1 < arg2*
-
-**lte(arg1, arg2)** Less than or equal to. *arg1 <= arg2*
-
-**eq(arg1, arg2)** Equal to. *arg1 == arg2*
-
-**gte(arg1, arg2)** Greater than or equal to. *arg1 >= arg2*
-
-**gt(arg1, arg2)** Greater than. *arg1 > arg2*
-
-**any(item, ...args)** Returns true if *item* matches with any of the values of the rest of the arguments.
-
-**plus(arg1, arg2)** Mathematical addition or concatenate operator depending on the argument datatypes. *arg1 + arg2*
-
-**minus(arg1, arg2)** Mathematical subtraction. *arg1 - arg2*
-
-**times(arg1, arg2)** Mathematical multiplication. *arg1 x arg2*
-
-**divideby(arg1, arg2)** Mathematical division. *arg1 / arg2*
-
-**modulo(arg1, arg2)** Mathematical modulo. *arg1 % arg2*
-
-**power(arg1, arg2)** Mathematical power function. *arg1 ^ arg2*
-
-**ifelse(condition, true_arg, false_arg)** If else conditional operator. *if (**condition**) then*true_arg** else*false_arg**
-
-**print(string)** Prints a string to the console and also returns the printed string. *print("Hello, world!")*
-
-**echo(string)** Simply returns the inputted. *string.echo("Hello, world!") // Returns "Hello, world!"*
 
 ## Examples
 ```
