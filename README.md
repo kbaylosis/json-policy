@@ -57,7 +57,7 @@ npm i --save json-policy
 | **divideby(arg1, arg2)** | Mathematical division. | *arg1 / arg2* | 
 | **modulo(arg1, arg2)** | Mathematical modulo. | *arg1 % arg2* | 
 | **power(arg1, arg2)** | Mathematical power function. | *arg1 ^ arg2* | 
-| **ifelse(condition, true_arg, false_arg)** | If else conditional operator. | *if (**condition**) then **true_arg** else **false_arg** | 
+| **ifelse(condition, true_arg, false_arg)** | If else conditional operator. | *if (**condition**) then **true_arg** else **false_arg*** | 
 | **print(string)** | Prints a string to the console and also returns the printed string. | *print("Hello, world!")* | 
 | **echo(string)** | Simply returns the inputted. | *string.echo("Hello, world!") // Returns "Hello, world!"* | 
 
