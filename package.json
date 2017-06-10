@@ -1,6 +1,6 @@
 {
   "name": "json-policy",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Evaluate json-based expressions and policies",
   "main": "build/json-policy.min.js",
   "dependencies": {
