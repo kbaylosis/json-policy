@@ -63,7 +63,7 @@ jsonPolicy.evaluate({
 });         // Equal to true
 
 ```
-## Supply your own operator definitions
+## Custom operators
 
 ```
 var operations = {
