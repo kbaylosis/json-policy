@@ -151,7 +151,7 @@ function JSONPolicy(ops, vp) {
 	// Provide facility to override or add new operations
 	//
 	if (!_.isNil(ops)) {
-		_.merge(operations, ops);
+		_.merge(operations, ops(_.clone(operations)));
 	}
 
 	if (!_.isNil(vp)) {

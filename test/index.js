@@ -204,3 +204,48 @@ describe("json-policies", function() {
 	});
 
 });
+
+describe("extend-json-policies", function () {
+	var extendOps = function (operations) {
+		return {
+			anyArray: function () {
+				if (!arguments || arguments.length <= 1) {
+					return false;
+				}
+
+				var result = false;
+				var arg1 = arguments[0];
+				for (let i = 1, argLen = arguments.length; i < argLen; i++) {
+					if (Array.isArray(arguments[i])) {
+						const args = [arg1].concat(arguments[i]);
+						result = result || operations.any.apply(null, args);
+					} else {
+						result = result || operations.eq(arg1, arguments[i]);
+					}
+				}
+
+				return result;
+			}
+		}
+	}
+
+	var jsonPolicy =  new JSONPolicy(extendOps);
+	
+	it("run extended operators", function () {
+		jsonPolicy
+			.evaluate({
+				anyArray: [
+					"$domain",
+					"$allowedDomains"
+				]
+			}, {
+				domain: "localhost",
+				allowedDomains: [
+					"localhost",
+					"test.json-policy.co",
+				]
+			})
+			.should
+			.equal(true);
+	})
+})
