@@ -5,7 +5,7 @@
   "main": "build/json-policy.min.js",
   "dependencies": {
     "lodash": "^4.0.1",
-    "property-path": "0.0.5"
+    "property-path": "https://github.com/michaeljohneduave/property-path.git"
   },
   "devDependencies": {
     "chai": "^3.4.1",
