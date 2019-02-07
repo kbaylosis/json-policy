@@ -4,16 +4,16 @@
   "description": "Evaluate json-based expressions and policies",
   "main": "build/json-policy.min.js",
   "dependencies": {
-    "lodash": "^4.0.1",
-    "property-path": "https://github.com/michaeljohneduave/property-path.git"
+    "lodash": "^4.17.11",
+    "property-path": "0.0.5"
   },
   "devDependencies": {
     "chai": "^3.4.1",
-    "grunt": "^0.4.5",
+    "grunt": "^1.0.3",
     "grunt-contrib-jshint": "^0.12.0",
     "grunt-contrib-uglify": "^0.11.0",
     "grunt-mocha-test": "^0.12.7",
-    "mocha": "^2.4.4"
+    "mocha": "^5.2.0"
   },
   "scripts": {
     "test": "grunt test"

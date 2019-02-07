@@ -3,7 +3,7 @@
  */
 var _ = require("lodash");
 var propPath = require("property-path");
-var varPrefix = "$"; 
+var varPrefix = "$";
 
 /**
  * Built-in operations
@@ -14,41 +14,41 @@ var operations = {
 	// Boolean
 	//
 	"not" : function(arg) {
-		return !arg;	
+		return !arg;
 	},
 	"and" : function() {
-		var result = true; 
+		var result = true;
 		for (var i = 0; i < arguments.length; i++) {
 			result = result && arguments[i];
 		}
 
-		return result;	
+		return result;
 	},
 	"or" : function() {
-		var result = false; 
+		var result = false;
 		for (var i = 0; i < arguments.length; i++) {
 			result = result || arguments[i];
 		}
 
-		return result;	
+		return result;
 	},
 	"xor" : function(arg1, arg2) {
 		return foo ? !bar : bar;
 	},
-	// Multiple AND 
+	// Multiple AND
 	"mand" : function() {
 		if (!arguments || arguments.length <= 2) {
 			return false;
 		}
 
-		var result = false; 
+		var result = false;
 		var arg1 = arguments[0];
 		var op = arguments[1];
 		for (var i = 2; i < arguments.length; i++) {
 			result = result && operations[op].apply({}, [arg1, arguments[i]]);
 		}
 
-		return result;	
+		return result;
 	},
 	// Multiple OR
 	"mor" : function() {
@@ -56,18 +56,18 @@ var operations = {
 			return false;
 		}
 
-		var result = false; 
+		var result = false;
 		var arg1 = arguments[0];
 		var op = arguments[1];
 		for (var i = 2; i < arguments.length; i++) {
 			result = result || operations[op].apply({}, [arg1, arguments[i]]);
 		}
 
-		return result;	
+		return result;
 	},
 
 	//
-	// Comparison 
+	// Comparison
 	//
 	"neq" : function(arg1, arg2) {
 		return arg1 !== arg2;
@@ -92,13 +92,13 @@ var operations = {
 			return false;
 		}
 
-		var result = false; 
+		var result = false;
 		var arg1 = arguments[0];
 		for (var i = 1; i < arguments.length; i++) {
 			result = result || operations.eq(arg1, arguments[i]);
 		}
 
-		return result;	
+		return result;
 	},
 
 	//
@@ -129,11 +129,11 @@ var operations = {
 	"ifelse" : function(cond, arg1, arg2) {
 		if (cond) {
 			return arg1;
-		}	
+		}
 
 		return arg2;
 	},
-	
+
 	//
 	// Misc
 	//
@@ -143,7 +143,7 @@ var operations = {
 	},
 	"echo" : function(str) {
 		return str;
-	} 
+	}
 };
 
 function JSONPolicy(ops, vp) {
@@ -161,7 +161,7 @@ function JSONPolicy(ops, vp) {
 
 function performOp(operator, operands) {
 	if (!_.has(operations, operator)) {
-		if (_.isArray(operands) && 
+		if (_.isArray(operands) &&
 			 operands.length === 1) {
 			operands = operands[0];
 		}
@@ -176,8 +176,19 @@ function performOp(operator, operands) {
 	if (!_.isArray(operands)) {
 		operands = [operands];
 	}
-	
-	return operations[operator].apply(this, operands); 
+
+	return operations[operator].apply(this, operands);
+}
+
+//
+// Trap null or undefined data not handled by the property-path lib
+//
+function getPropPath(propPath, data, exp) {
+	if (_.isNull(data) || _.isUndefined(data)) {
+		return undefined;
+	}
+
+	return propPath.get(data, exp);
 }
 
 //
@@ -194,15 +205,14 @@ function subVar(exp, data) {
 				exp = exp.replace("[" + index + "]", "");
 				var value = null;
 				if (exp.length > 0) {
-					value = propPath.get(data, exp);
+					value = getPropPath(propPath, data, exp);
 					return value[index];
 				}
 
 				return data[index];
 			}
 
-			return propPath
-				.get(data, exp);
+			return getPropPath(propPath, data, exp);
 		}
 	}
 
@@ -210,17 +220,17 @@ function subVar(exp, data) {
 }
 
 function evaluate(policy, data, operator) {
-	
+
 	//
 	// Act on base data types
 	//
-	if (_.isBoolean(policy) || 
-		 _.isDate(policy) || 
-		 _.isNumber(policy) || 
-		 _.isString(policy) || 
+	if (_.isBoolean(policy) ||
+		 _.isDate(policy) ||
+		 _.isNumber(policy) ||
+		 _.isString(policy) ||
 		 _.isNil(policy)) {
 
-		policy = subVar(policy, data); 			
+		policy = subVar(policy, data);
 		return performOp(operator, policy);
 	}
 
@@ -245,7 +255,7 @@ JSONPolicy.prototype = _.create(Object.prototype, {
 	constructor : JSONPolicy,
 
 	evaluate : evaluate
-		
+
 });
 
 module.exports = JSONPolicy;
