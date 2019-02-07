@@ -151,6 +151,20 @@ jsonPolicy.evaluate({
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/kbaylosis/json-policy/tags). 
 
+## Building and Testing
+
+Make use of grunt.
+
+To build, perform the command below. The output will be in the build directory.
+```
+grunt build
+```
+
+To run the test fixtures:
+```
+grunt test
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
