@@ -6,83 +6,83 @@ describe("json-policies", function() {
 	var jsonPolicy = new JSONPolicy();
 
 	it("simple boolean", function() {
-		jsonPolicy.evaluate({"not" : false}).should.equal(true);	
+		jsonPolicy.evaluate({"not" : false}).should.equal(true);
 	});
 
 	it("complex boolean", function() {
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"and" : [
 				{"not" : {"eq" : [5, 1]}},
 				{"neq" : [5, 1]},
 				{"eq" : [1, 1]}
-		]}).should.equal(true);	
+		]}).should.equal(true);
 	});
 
 	it("simple comparisons", function() {
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"neq" : [0, 1]
-		}).should.equal(true);	
+		}).should.equal(true);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"lt" : [0, 1]
-		}).should.equal(true);	
+		}).should.equal(true);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"lte" : [0, 1]
-		}).should.equal(true);	
+		}).should.equal(true);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"lte" : [1, 1]
-		}).should.equal(true);	
+		}).should.equal(true);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"eq" : [1, 1]
-		}).should.equal(true);	
+		}).should.equal(true);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"gte" : [1, 1]
-		}).should.equal(true);	
+		}).should.equal(true);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"gte" : [1, 0]
-		}).should.equal(true);	
+		}).should.equal(true);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"gt" : [1, 0]
-		}).should.equal(true);	
+		}).should.equal(true);
 	});
 
 	it("simple arithmetic", function() {
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"plus" : [1, 2]
-		}).should.equal(3);	
+		}).should.equal(3);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"minus" : [2, 1]
-		}).should.equal(1);	
+		}).should.equal(1);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"times" : [2, 3]
-		}).should.equal(6);	
+		}).should.equal(6);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"divideby" : [6, 2]
-		}).should.equal(3);	
+		}).should.equal(3);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"modulo" : [6, 2]
-		}).should.equal(0);	
+		}).should.equal(0);
 
-		jsonPolicy.evaluate({ 
+		jsonPolicy.evaluate({
 			"power" : [2, 3]
-		}).should.equal(8);	
+		}).should.equal(8);
 	});
 
 	it("literals", function() {
-		jsonPolicy.evaluate(true).should.equal(true);	
-		jsonPolicy.evaluate(false).should.equal(false);	
-		jsonPolicy.evaluate([true]).should.equal(true);	
-		jsonPolicy.evaluate([false]).should.equal(false);	
+		jsonPolicy.evaluate(true).should.equal(true);
+		jsonPolicy.evaluate(false).should.equal(false);
+		jsonPolicy.evaluate([true]).should.equal(true);
+		jsonPolicy.evaluate([false]).should.equal(false);
 	});
 
 	it("if then else", function() {
@@ -94,11 +94,11 @@ describe("json-policies", function() {
 	});
 
 	it("property access", function() {
-		jsonPolicy.evaluate({"gt" : [25, "$a"]}, { a : 18}).should.equal(true);	
-		jsonPolicy.evaluate({"gt" : [25, "$user.age"]}, { user : { age : 18}}).should.equal(true);	
+		jsonPolicy.evaluate({"gt" : [25, "$a"]}, { a : 18}).should.equal(true);
+		jsonPolicy.evaluate({"gt" : [25, "$user.age"]}, { user : { age : 18}}).should.equal(true);
 
 		jsonPolicy.evaluate({
-			"and" : [ 
+			"and" : [
 				{"eq" : ["$resource.sensitivity", "classified"]},
 				{"or" : [
 					{"eq" : ["$user.clearance", "topsecret"]},
@@ -106,49 +106,49 @@ describe("json-policies", function() {
 					{"eq" : ["$user.clearance", "classified"]},
 				]}
 			]
-		}, { 
+		}, {
 			resource : {
 				sensitivity : "classified"
 			},
 			user : {
 				clearance : "topsecret"
 			}
-		}).should.equal(true);	
+		}).should.equal(true);
 
 		jsonPolicy.evaluate({
-			"and" : [ 
+			"and" : [
 				{"eq" : ["$resource.sensitivity", "classified"]},
 				{"mor" : ["$user.clearance", "eq", "topsecret", "secret", "classified"]},
 			]
-		}, { 
+		}, {
 			resource : {
 				sensitivity : "classified"
 			},
 			user : {
 				clearance : "secret"
 			}
-		}).should.equal(true);	
+		}).should.equal(true);
 
 		jsonPolicy.evaluate({
-			"and" : [ 
+			"and" : [
 				{"eq" : ["$resource.sensitivity", "classified"]},
 				{"any" : ["$user.clearance", "topsecret", "secret", "classified"]},
 			]
-		}, { 
+		}, {
 			resource : {
 				sensitivity : "classified"
 			},
 			user : {
 				clearance : "secret"
 			}
-		}).should.equal(true);	
+		}).should.equal(true);
 
 		jsonPolicy.evaluate({ and : [
 			{ eq : ["$resource.sensitivity" , "confidential"]},
 			{ any : [
 				"$user.clearance",
 				"confidential", "secret", "topsecret"
-			]}				
+			]}
 		]}, {
 			resource : {
 				sensitivity : "confidential"
@@ -156,28 +156,28 @@ describe("json-policies", function() {
 			user : {
 				clearance : "secret"
 			}
-		}).should.equal(true);	
+		}).should.equal(true);
 	});
 
 	it("array item access", function() {
 		jsonPolicy.evaluate({
-			echo : "$[1]" 
-		}, ["apple", "banana", "orange"]).should.equal("banana");	
+			echo : "$[1]"
+		}, ["apple", "banana", "orange"]).should.equal("banana");
 
 		jsonPolicy.evaluate({
-			echo : "$b[2]" 
-		}, { a : ["apple", "banana", "orange"], b : ["one", "two", "three"]}).should.equal("three");	
-		
+			echo : "$b[2]"
+		}, { a : ["apple", "banana", "orange"], b : ["one", "two", "three"]}).should.equal("three");
+
 		jsonPolicy.evaluate({
-			echo : "$b.c[2]" 
-		}, { a : ["apple", "banana", "orange"], b : { c : ["one", "two", "three"]}}).should.equal("three");	
+			echo : "$b.c[2]"
+		}, { a : ["apple", "banana", "orange"], b : { c : ["one", "two", "three"]}}).should.equal("three");
 	});
 
 	it("fizzbuzz", function() {
 		var expected = require("fs").readFileSync("./test/fizzbuzz.txt", {encoding : "utf-8"});
 		var result = "";
 		for (var i = 1; i <= 30; i++) {
-			result = result + jsonPolicy.evaluate({ 
+			result = result + jsonPolicy.evaluate({
 				or : [
 					{ ifelse : [
 						{ eq : [ { modulo : [ "$i", 15 ] }, 0]},
@@ -195,7 +195,7 @@ describe("json-policies", function() {
 						false
 					]},
 					{ echo : "$i" }
-			]}, { i : i });	
+			]}, { i : i });
 
 			result += ",";
 		}
@@ -230,7 +230,7 @@ describe("extend-json-policies", function () {
 	}
 
 	var jsonPolicy =  new JSONPolicy(extendOps);
-	
+
 	it("run extended operators", function () {
 		jsonPolicy
 			.evaluate({
@@ -248,4 +248,28 @@ describe("extend-json-policies", function () {
 			.should
 			.equal(true);
 	})
+})
+
+describe("non object data parameters", function () {
+	var jsonPolicy =  new JSONPolicy();
+
+	it("null", function () {
+		jsonPolicy.evaluate({"eq" : ["test", "$a"]}, null).should.equal(false);
+	});
+
+	it("undefined", function () {
+		jsonPolicy.evaluate({"eq" : ["test", "$a"]}, undefined).should.equal(false);
+	});
+
+	it("string", function () {
+		jsonPolicy.evaluate({"eq" : ["test", "$a"]}, "").should.equal(false);
+	});
+
+	it("integer", function () {
+		jsonPolicy.evaluate({"eq" : ["test", "$a"]}, 1).should.equal(false);
+	});
+
+	it("decimal", function () {
+		jsonPolicy.evaluate({"eq" : ["test", "$a"]}, 1.2).should.equal(false);
+	});
 })
