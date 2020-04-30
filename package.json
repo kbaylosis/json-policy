@@ -4,16 +4,16 @@
   "description": "Evaluate json-based expressions and policies",
   "main": "build/json-policy.min.js",
   "dependencies": {
-    "lodash": "^4.17.11",
-    "property-path": "0.0.5"
+    "lodash": "^4.17.15",
+    "property-path": "1.0.0"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
-    "grunt": "^1.0.3",
-    "grunt-contrib-jshint": "^0.12.0",
-    "grunt-contrib-uglify": "^0.11.0",
-    "grunt-mocha-test": "^0.12.7",
-    "mocha": "^5.2.0"
+    "chai": "^4.2.0",
+    "grunt": "^1.1.0",
+    "grunt-contrib-jshint": "^2.1.0",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-mocha-test": "^0.13.3",
+    "mocha": "^7.1.2"
   },
   "scripts": {
     "test": "grunt test"
