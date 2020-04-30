@@ -1,5 +1,8 @@
 # json-policy
 
+[![GitHub package.json version](https://img.shields.io/github/package-json/v/kbaylosis/json-policy)](https://www.npmjs.com/package/json-policy)
+[![Build Status](https://travis-ci.org/kbaylosis/json-policy.svg?branch=master)](https://travis-ci.org/kbaylosis/json-policy)
+
 Evaluates expressions/policies that are based on the JSON format. It allows mathematical expressions, conditional operators, and custom operators of your own doing.
 
 ## Installing
